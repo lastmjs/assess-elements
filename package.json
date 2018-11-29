@@ -1,0 +1,32 @@
+{
+  "name": "assess-elements",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "test": "zwitterion"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lastmjs/assess-elements.git"
+  },
+  "author": "Jordan Last <jordan.michael.last@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lastmjs/assess-elements/issues"
+  },
+  "homepage": "https://github.com/lastmjs/assess-elements#readme",
+  "dependencies": {
+    "@kuscamara/code-sample": "^3.0.2",
+    "ace-builds": "^1.4.2",
+    "assessml": "^0.13.0",
+    "dompurify": "^1.0.8",
+    "escodegen-es-module": "0.0.0",
+    "esprima-es-module": "0.0.0",
+    "functional-element": "0.0.9",
+    "redux": "^4.0.1",
+    "wysiwyg-e": "^3.0.7"
+  },
+  "devDependencies": {
+    "zwitterion": "^0.27.3"
+  }
+}
