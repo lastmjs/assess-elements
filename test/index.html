@@ -7,6 +7,18 @@
     </head>
 
     <body>
-        <assess-item-editor></assess-item-editor>
+        <assess-item-editor id="assess-item-editor"></assess-item-editor>
+
+        <script>
+            const assessItemEditor = document.getElementById('assess-item-editor');
+
+            assessItemEditor.addEventListener('assessml-changed', (e) => {
+                console.log('assessml-changed', e.detail.value);
+            });
+            
+            assessItemEditor.addEventListener('java-script-changed', (e) => {
+                console.log('java-script-changed', e.detail.value);
+            });
+        </script>
     </body>
 </html>

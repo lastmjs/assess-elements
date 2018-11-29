@@ -12,7 +12,9 @@ class JuicyAceEditor extends HTMLElement {
     }
 
     set value(val) {
-        this.editor.setValue(val, 1);
+        if (this.editor) {
+            this.editor.setValue(val, 1);
+        }
     }
 
     connectedCallback() {
@@ -38,6 +40,9 @@ class JuicyAceEditor extends HTMLElement {
         this.editor = ace.edit(`${this.id}-editor`);
         this.editor.session.setUseWorker(false);
         this.editor.session.setMode('ace/mode/javascript');
+        this.editor.on('change', () => {
+            this.dispatchEvent(new CustomEvent('value-changed'));
+        });
     }
 }
 
