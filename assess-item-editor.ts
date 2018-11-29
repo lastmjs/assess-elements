@@ -10,14 +10,10 @@ import '@polymer/iron-icons';
 const ASSESSML_EDITOR = 'ASSESSML_EDITOR';
 const JAVA_SCRIPT_EDITOR = 'JAVA_SCRIPT_EDITOR';
 
-const ASSESSML = 'AssessML';
-const JAVA_SCRIPT = 'JavaScript';
-
 customElement('assess-item-editor', ({ constructing, connecting, props, update, element }) => {
     if (constructing) {
         return {
             showEditor: ASSESSML_EDITOR,
-            toggleButtonText: JAVA_SCRIPT,
             assessML: '',
             javaScript: ''
         };
@@ -124,9 +120,6 @@ function assessMLEditorValueChanged(update, props, assessMLEditor, element) {
 }
 
 function javaScriptEditorValueChanged(update, props, javaScriptEditor, element) {
-    console.log('props.javaScript', props.javaScript);
-    console.log('javaScriptEditor.value', javaScriptEditor.value);
-
     if (props.javaScript === javaScriptEditor.value || javaScriptEditor.value === '') {
         return;
     }
