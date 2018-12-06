@@ -37,7 +37,7 @@ class JuicyAceEditor extends HTMLElement {
             </div>
         `;
 
-        this.editor = ace.edit(`${this.id}-editor`);
+        this.editor = ace.edit(this.querySelector(`#${this.id}-editor`));
         this.editor.session.setUseWorker(false);
         this.editor.session.setMode('ace/mode/javascript');
         this.editor.on('change', () => {

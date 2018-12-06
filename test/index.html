@@ -4,20 +4,31 @@
     <head>
         <script src="process-polyfill.js"></script>
         <script type="module" src="../assess-item-editor.ts"></script>
+        <script type="module" src="../assess-item.ts"></script>
     </head>
 
     <body>
         <assess-item-editor id="assess-item-editor"></assess-item-editor>
+        <assess-item id="assess-item"></assess-item>
 
         <script>
             const assessItemEditor = document.getElementById('assess-item-editor');
+            const assessItem = document.getElementById('assess-item');
 
             assessItemEditor.addEventListener('assessml-changed', (e) => {
-                console.log('assessml-changed', e.detail.value);
+                console.log(e.detail.value);
+                assessItem.question = {
+                    ...assessItem.question,
+                    assessML: e.detail.value,
+                    javaScript: ''
+                };
             });
             
             assessItemEditor.addEventListener('java-script-changed', (e) => {
-                console.log('java-script-changed', e.detail.value);
+                assessItem.question = {
+                    ...assessItem.question,
+                    javaScript: e.detail.value
+                };
             });
         </script>
     </body>

@@ -224,7 +224,7 @@ class AssessItem extends HTMLElement {
 
     getSanitizedHTML(html: string) {
         const sanitizedHTML = DOMPurify.sanitize(html, {
-            ADD_ATTR: ['contenteditable', 'fontsize', 'data', 'copy-clipboard-button', 'target'],
+            ADD_ATTR: ['contenteditable', 'fontsize', 'data', 'copy-clipboard-button', 'target', 'render'],
             ADD_TAGS: ['juicy-ace-editor', 'function-plot', 'code-sample'],
             SANITIZE_DOM: false // This allows DOMPurify.sanitize to be called multiple times in succession without changing the output (it was removing ids before)
         });
