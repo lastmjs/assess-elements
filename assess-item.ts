@@ -223,6 +223,7 @@ class AssessItem extends HTMLElement {
     }
 
     getSanitizedHTML(html: string) {
+        //TODO we might not need DOMPurify with lit-html, look into it
         const sanitizedHTML = DOMPurify.sanitize(html, {
             ADD_ATTR: ['contenteditable', 'fontsize', 'data', 'copy-clipboard-button', 'target', 'render'],
             ADD_TAGS: ['juicy-ace-editor', 'function-plot', 'code-sample'],

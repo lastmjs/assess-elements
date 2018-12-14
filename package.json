@@ -25,6 +25,7 @@
     "esprima-es-module": "0.0.0",
     "functional-element": "0.0.9",
     "redux": "4.0.1",
+    "secure-eval": "0.4.0",
     "wysiwyg-e": "3.0.7"
   },
   "devDependencies": {

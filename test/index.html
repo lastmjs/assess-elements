@@ -11,6 +11,8 @@
         <assess-item-editor id="assess-item-editor"></assess-item-editor>
         <assess-item id="assess-item"></assess-item>
 
+        <button onclick="submit()">Submit</button>
+
         <script>
             const assessItemEditor = document.getElementById('assess-item-editor');
             const assessItem = document.getElementById('assess-item');
@@ -30,6 +32,14 @@
                     javaScript: e.detail.value
                 };
             });
+
+            assessItem.addEventListener('question-response', (e) => {
+                alert(e.detail.checkAnswerResponse);
+            });
+
+            function submit() {
+                assessItem.checkAnswer();
+            }
         </script>
     </body>
 </html>

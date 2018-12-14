@@ -1,6 +1,5 @@
 import {parse, compileToHTML, getAstObjects, generateRandomInteger} from 'assessml';
-// import {secureEval} from 'secure-eval/secure-eval.ts';
-import {insecureEval} from './insecure-eval';
+import { secureEval } from 'secure-eval/secure-eval.ts';
 import {
     AST,
     ASTObject,
@@ -71,7 +70,7 @@ export async function buildQuestion(text: string, code: string): Promise<{
         const astRadiosString = createUserRadiosString(astRadios);
         const astGraphsString = createUserGraphsString(astGraphs);
 
-        const originalVariableValues = await insecureEval(`
+        const originalVariableValues = await secureEval(`
             let answer = true;
             ${astVariablesString}
             ${astImagesString}
@@ -82,9 +81,10 @@ export async function buildQuestion(text: string, code: string): Promise<{
             ${astRadiosString}
             ${astGraphsString}
             ${code}
-            postMessage({
+            window.parent.postMessage({
+                type: 'secure-eval-iframe-result',
                 ${[...astVariables.map((astVariable: Variable) => astVariable.varName), ...astImages.map((astImage: Image) => astImage.varName), ...astGraphs.map((astGraph: Graph) => astGraph.varName), getAssignedToVariableNames(esprima.parse(code), astInputs, astEssays, astChecks, astRadios)]}
-            });
+            }, '*');
         `);
 
         if (originalVariableValues.error) {
@@ -442,15 +442,16 @@ export async function getPropertyValue(jsAst: Program, amlAst: AST, varName: str
             return `${result}let ${astImage.varName} = {};`;
         }, '');
 
-        return (await insecureEval(`
+        return (await secureEval(`
             let answer;
             ${userVariablesString}
             ${defineUserImagesString}
             ${escodegen.generate(jsAst)}
 
-            postMessage({
+            window.parent.postMessage({
+                type: 'secure-eval-iframe-result',
                 result: ${escodegen.generate((<AssignmentExpression> (<ExpressionStatement> objectsWithProperty[0]).expression).right)}
-            });
+            }, '*');
         `)).result;
     }
     else {
@@ -467,13 +468,14 @@ export async function getAssignmentValue(jsAst: Program, amlAst: AST, varName: s
         const astVariables: Variable[] = <Variable[]> getAstObjects(amlAst, 'VARIABLE');
         const userVariablesString = createUserVariablesString(astVariables);
 
-        return (await insecureEval(`
+        return (await secureEval(`
             ${userVariablesString}
             ${escodegen.generate(jsAst)}
 
-            postMessage({
+            window.parent.postMessage({
+                type: 'secure-eval-iframe-result',
                 result: ${escodegen.generate((<AssignmentExpression> (<ExpressionStatement> objectsWithAssignment[objectsWithAssignment.length - 1]).expression).right)}
-            });
+            }, '*');
         `)).result;
     }
     else {
@@ -529,13 +531,14 @@ export async function checkAnswer(code: string, originalVariableValues, userVari
         ${codeReplacedVariables}
 
         if (autoPostMessage === true) {
-            postMessage({
+            window.parent.postMessage({
+                type: 'secure-eval-iframe-result',
                 answer
-            });
+            }, '*');
         }
     `;
 
-    return await insecureEval(codeToEval);
+    return await secureEval(codeToEval);
 }
 
 function createUserVariablesString(userVariables: UserVariable[] | Variable[]) {
